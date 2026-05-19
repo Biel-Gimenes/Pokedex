@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom"; // 1. Importe o useParams e o Link
-import { usePokemonDetails } from "../pages/usePokemonDetails"; // 2. Importe o hook personalizado para buscar os detalhes do Pokémon
+import { usePokemonDetails } from "../hooks/usePokemonDetails"; // 2. Importe o hook personalizado para buscar os detalhes do Pokémon
 
 export const PokemonDetails = () => {
   // 2. CAPTURA O ID DA URL: Se a URL for /pokemon/4, a variável 'id' será "4"

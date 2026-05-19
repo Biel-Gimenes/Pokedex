@@ -2,6 +2,7 @@ import { usePokemon } from "../hooks/usePokemon";
 import { PokemonCard } from "../components/PokemonCard";
 import { Header } from "../components/Header";
 import { SearchBar } from "../components/SearchBar";
+import { Loading } from "../components/Loading";
 import { useState } from "react";
 
 export const Home = () => {
@@ -20,11 +21,7 @@ export const Home = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <p className="text-xl font-bold text-slate-400 animate-pulse">
-              Carregando Pokédex...
-            </p>
-          </div>
+          <Loading />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredPokemon.map((p) => (

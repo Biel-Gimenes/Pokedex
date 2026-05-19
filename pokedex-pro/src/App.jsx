@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { usePokemon } from "./hooks/usePokemon";
-//import {pageHome} from "./pages/home"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { PokemonDetails } from "./components/PokemonDetails";
 
 function App() {
-  const { pokemon, loading } = usePokemon();
-  console.log(pokemon);
-  if (loading) {
-    return <h1>Carregando...</h1>;
-  }
-
   return (
-    <div>
-      {pokemon.map((pokemons) => (
-        <p key={pokemons.id}>{pokemons.name}</p>
-      ))}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Rota da Página Inicial */}
+        <Route path="/" element={<Home />} />
+
+        {/* Rota de Detalhes: o ':id' é um parâmetro dinâmico na URL */}
+        <Route path="/pokemon/:id" element={<PokemonDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

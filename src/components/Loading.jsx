@@ -9,7 +9,7 @@ export const Loading = () => {
           key={index}
           className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 animate-pulse"
         >
-          <div className="w-full h-44 bg-slate-150 rounded-2xl mb-4 flex justify-center items-center">
+          <div className="w-full h-44 bg-slate-100 rounded-2xl mb-4 flex justify-center items-center">
             <div className="w-24 h-24 bg-slate-200 rounded-full"></div>
           </div>
           <div className="h-6 bg-slate-200 rounded w-3/4 mx-auto mb-3"></div>

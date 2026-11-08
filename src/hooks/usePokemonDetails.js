@@ -4,28 +4,43 @@ import axios from "axios";
 export const usePokemonDetails = (id) => {
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    // Se não houver ID válido, não faz nada
     if (!id) return;
+
+    const controller = new AbortController();
 
     const fetchDetails = async () => {
       try {
         setLoading(true);
-        // Busca os dados específicos daquele Pokémon pelo ID ou nome
+        setError(false);
+        setNotFound(false);
+
         const response = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${id}`,
+          { signal: controller.signal },
         );
         setPokemon(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar detalhes do Pokémon:", error);
+      } catch (err) {
+        if (axios.isCancel(err)) return;
+        setPokemon(null);
+        // 404 = esse Pokémon não existe; qualquer outra falha = erro de rede.
+        if (err.response?.status === 404) setNotFound(true);
+        else setError(true);
+        console.error("Erro ao buscar detalhes do Pokémon:", err);
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     fetchDetails();
-  }, [id]); // Executa novamente se o ID mudar
+    return () => controller.abort();
+  }, [id, attempt]);
 
-  return { pokemon, loading };
+  const retry = () => setAttempt((n) => n + 1);
+
+  return { pokemon, loading, notFound, error, retry };
 };
